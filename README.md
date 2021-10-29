@@ -1,10 +1,10 @@
 # weatherBOM
 
-This R package provides a few convenience functions to obtain weather data (specifically, daily and 3-hourly forecasts, and current observations) for a specific location from the Australian Government Bureau of Meteorology (BOM) through the BOM's REST API. Sadly, the BOM has recently taken a more restrictive position towards providing data access by means of automated processes. Currently, only limited data are available through the BOM's API endpoint [https://api.weather.bom.gov.au/v1/](https://api.weather.bom.gov.au/v1/).
+This R package provides a few convenience functions to obtain weather data (specifically, daily and 3-hourly forecasts, and current observations) for a specific location from the Australian Government Bureau of Meteorology (BOM) through the BOM's REST API. Sadly, the BOM has recently taken a more restrictive position towards providing data access by means of automated processes. Currently, only limited data are available through the BOM's API endpoint [https://api.weather.bom.gov.au/v1/](https://api.weather.bom.gov.au/v1/). I found the documentation provided in [BoM Weather Docs](https://github.com/trickypr/bom-weather-docs) invaluable for implementing these functions.
 
 ## Disclaimer and copyright
 
-This project is neither related to nor endorsed by the BOM. With (continued and expected) changes to how the BOM manages (i.e. restricts) automatic access to data, some or all of the functions might break at any time. I found the documentation provided in [BoM Weather Docs](https://github.com/trickypr/bom-weather-docs) invaluable for implementing these functions.
+This project is neither related to nor endorsed by the BOM. With (continued and expected) changes to how the BOM manages (read: restricts) automatic access to data, some or all of the functions might break at any time. 
 
 All data provided by the BOM are under [copyright](http://reg.bom.gov.au/other/copyright.shtml).
 
@@ -17,11 +17,12 @@ The easiest way to install the R package is from GitHub via `remotes`.
 remotes::install_github("mevers/weatherBOM")
 ```
 
-## Example - 3-hourly forecasts
+## Examples
 
-As a simple example, let's show 3-hourly data for the next 48 hours for Canberra Airport. We start by looking up the suitable location ID for Canberra Airport.
+We start by loading the library and looking up the location ID for Canberra Airport.
 
-```
+```r
+library(weatherBOM)
 bom_search_location("Canberra")
 ```
 
@@ -33,7 +34,11 @@ This returns a `data.frame`
 2 r3dp4vp Canberra Airport-r3dp4vp Canberra Airport     2609   ACT
 ```
 
-from which we can read off the location ID in column `geohash`. For Canberra Airport, this is `r3dp4vp`. We can now use the location ID to get 3-hourly forecasts. To make things more interesting, we visualise temperature forecasts and also include labels denoting the predicted wind speed & direction as well as probability of rain.
+from which we can read off the location ID in column `geohash`. For Canberra Airport, this is `r3dp4vp`. 
+
+### 3-hourly forecasts
+
+We can now use the location ID to get 3-hourly forecasts. To make things more interesting, we visualise temperature forecasts and also include labels denoting the predicted wind speed & direction as well as probability of rain.
 
 ```r
 library(tidyverse)
@@ -58,9 +63,9 @@ ggsave("example_3-hourly.png", width = 12, height = 6)
 ![](example_3-hourly.png)
 
 
-## Example - Daily forecasts
+### Daily forecasts
 
-To show daily minimum and maximum temperature forecasts we can `bom_forecasts` with implicit (default) `freq = "daily"`. The following plot shows +7 days maximum and minimum temperatures in red and blue, respectively.
+To show daily minimum and maximum temperature forecasts we can use `bom_forecasts` with implicit (default) `freq = "daily"`. The following plot shows +7 days maximum and minimum temperatures in red and blue, respectively.
 
 
 ```r
@@ -80,12 +85,12 @@ bom_forecasts("r3dp4vp") %>%
 ggsave("example_daily.png", width = 12, height = 6)
 ```
 
-![](example_daily.png?)
+![](example_daily.png)
 
 
 ## Example - Interpolate between 3-hourly forecasts
 
-As an (educational) exercise, we use [`prophet`](https://facebook.github.io/prophet/) to fit a seasonal model that 3-hourly forecasts and then use the model to obtain hourly interpolated values.
+As an (educational) exercise, we use [`prophet`](https://facebook.github.io/prophet/) to fit a seasonal model that 3-hourly forecasts and then use the model to obtain hourly "interpolated" values.
 
 ```r
 library(prophet)
