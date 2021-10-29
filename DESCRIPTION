@@ -1,0 +1,22 @@
+Package: weatherBOM
+Title: Retrieve weather data from the BOM REST API
+Version: 0.1.0
+Authors@R: 
+    person("Maurits", "Evers", , "maurits.evers@gmail.com", role = c("aut", "cre"))
+Description: The package retrieves weather data from the Australian Government Bureau of Meteorology (BOM) through their REST API.
+License: MIT + file LICENSE
+Depends: R (>= 4.0)
+Imports:
+    dplyr,
+    httr,
+    magrittr,
+    lubridate,
+    jsonlite,
+    stringr
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
