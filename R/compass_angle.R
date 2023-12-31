@@ -21,17 +21,15 @@ names(compass_pts) <- c(
 #'
 compass2angle <- function(x) {
 
-    if (all(is.null(x))) return(x)
-    if (all(is.na(x))) return(x)
-    if (!is.character(x)) stop("x needs to be a character vector\n")
-    as.numeric(unname(compass_pts[x]))
+    checkmate::assert_character(x)
+    if (all(is.na(x))) x else as.numeric(unname(compass_pts[x]))
 
 }
 
 
-#' Convert 16-wind compass rose points to angles
+#' Convert angles to 16-wind compass rose points
 #'
-#' Convert 16-wind compass rose points to angles
+#' Convert angles to 16-wind compass rose points
 #'
 #' @param x A `numeric` vector of angles
 #'
@@ -44,9 +42,7 @@ compass2angle <- function(x) {
 #'
 angle2compass <- function(x) {
 
-    if (all(is.null(x))) return(x)
-    if (all(is.na(x))) return(x)
-    if (!is.numeric(x)) stop("x needs to be a numeric vector\n")
+    checkmate::assert_numeric(x, any.missing = TRUE)
     names(compass_pts)[match(x, compass_pts)]
 
 }
