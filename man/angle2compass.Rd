@@ -2,7 +2,7 @@
 % Please edit documentation in R/compass_angle.R
 \name{angle2compass}
 \alias{angle2compass}
-\title{Convert 16-wind compass rose points to angles}
+\title{Convert angles to 16-wind compass rose points}
 \usage{
 angle2compass(x)
 }
@@ -13,7 +13,7 @@ angle2compass(x)
 A \code{character} vector of compass points
 }
 \description{
-Convert 16-wind compass rose points to angles
+Convert angles to 16-wind compass rose points
 }
 \examples{
 angle2compass(c(180, 22.5))

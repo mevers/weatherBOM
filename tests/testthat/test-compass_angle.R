@@ -1,12 +1,12 @@
 test_that(
-    "compass2angle() on NULL returns NULL", {
-        expect_identical(compass2angle(NULL), NULL)
+    "compass2angle() on NULL returns error", {
+        expect_error(compass2angle(NULL), regexp = "character")
     }
 )
 
 test_that(
     "compass2angle() on non-character vector returns error", {
-        expect_error(compass2angle(1:3), regexp = "character vector")
+        expect_error(compass2angle(1:3), regexp = "character")
     }
 )
 
@@ -32,21 +32,22 @@ test_that(
 )
 
 test_that(
-    "angle2compass() on NULL returns NULL", {
-        expect_identical(angle2compass(NULL), NULL)
+    "angle2compass() on NULL returns error", {
+        expect_error(angle2compass(NULL), regexp = "numeric")
     }
 )
 
 test_that(
     "angle2compass() on non-numeric vector returns error", {
-        expect_error(angle2compass(c("A", "B")), regexp = "numeric vector")
+        expect_error(angle2compass(c("A", "B")), regexp = "numeric")
     }
 )
 
 test_that(
-    "angle2compass() on NA (vector) returns NA (vector)", {
-        expect_identical(angle2compass(NA), NA)
-        expect_identical(angle2compass(c(NA, NA)), c(NA, NA))
+    "angle2compass() on all NA (vector) returns NA (vector)", {
+        expect_identical(angle2compass(NA), NA_character_)
+        expect_identical(angle2compass(
+            c(NA, NA)), c(NA_character_, NA_character_))
     }
 )
 
@@ -86,3 +87,4 @@ test_that(
             compass2angle(angle2compass(c(67.5, NA, 90))), c(67.5, NA, 90))
     }
 )
+
